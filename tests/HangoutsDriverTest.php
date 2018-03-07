@@ -2,12 +2,12 @@
 
 namespace Tests;
 
+use BotMan\BotMan\Http\Curl;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
-use Mockery as m;
-use BotMan\BotMan\Http\Curl;
-use PHPUnit_Framework_TestCase;
 use BotMan\Drivers\Hangouts\HangoutsDriver;
+use Mockery as m;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class HangoutsDriverTest extends PHPUnit_Framework_TestCase
@@ -22,7 +22,7 @@ class HangoutsDriverTest extends PHPUnit_Framework_TestCase
     private function getValidDriver($fixture = 'dm', $config = null)
     {
         $config = $config ?? [
-            'token' => self::TEST_TOKEN
+            'token' => self::TEST_TOKEN,
         ];
 
         $request = m::mock(Request::class.'[getContent]');
@@ -87,15 +87,15 @@ class HangoutsDriverTest extends PHPUnit_Framework_TestCase
     public function it_strips_annotations()
     {
         $driver = $this->getValidDriver('annotation', [
-            'token' => self::TEST_TOKEN,
-            'strip_annotations' => false
+            'token'             => self::TEST_TOKEN,
+            'strip_annotations' => false,
         ]);
 
         $this->assertSame('hey @botman hi', $driver->getMessages()[0]->getText());
 
         $driver = $this->getValidDriver('annotation', [
-            'token' => self::TEST_TOKEN,
-            'strip_annotations' => true
+            'token'             => self::TEST_TOKEN,
+            'strip_annotations' => true,
         ]);
 
         $this->assertSame('hi', $driver->getMessages()[0]->getText());

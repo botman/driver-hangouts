@@ -2,10 +2,10 @@
 
 namespace BotMan\Drivers\Hangouts\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\Drivers\Hangouts\HangoutsDriver;
 use BotMan\Studio\Providers\StudioServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 class HangoutsServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,7 @@ class HangoutsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! $this->isRunningInBotManStudio()) {
+        if (!$this->isRunningInBotManStudio()) {
             $this->loadDrivers();
 
             $this->publishes([
