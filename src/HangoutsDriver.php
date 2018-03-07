@@ -2,19 +2,19 @@
 
 namespace BotMan\Drivers\Hangouts;
 
-use BotMan\BotMan\Users\User;
-use Illuminate\Support\Collection;
-use BotMan\BotMan\Drivers\HttpDriver;
-use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Outgoing\Question;
-use Symfony\Component\HttpFoundation\Request;
-use BotMan\BotMan\Messages\Attachments\Image;
-use Symfony\Component\HttpFoundation\Response;
 use BotMan\BotMan\Drivers\Events\GenericEvent;
-use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use BotMan\BotMan\Drivers\HttpDriver;
+use BotMan\BotMan\Messages\Attachments\Image;
+use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use BotMan\BotMan\Messages\Outgoing\Question;
+use BotMan\BotMan\Users\User;
+use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class HangoutsDriver extends HttpDriver
 {
@@ -24,6 +24,7 @@ class HangoutsDriver extends HttpDriver
 
     /**
      * @param Request $request
+     *
      * @return void
      */
     public function buildPayload(Request $request)
@@ -96,12 +97,14 @@ class HangoutsDriver extends HttpDriver
      */
     public function isConfigured()
     {
-        return ! empty($this->config->get('token'));
+        return !empty($this->config->get('token'));
     }
 
     /**
      * Retrieve User information.
+     *
      * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $matchingMessage
+     *
      * @return User
      */
     public function getUser(IncomingMessage $matchingMessage)
@@ -115,6 +118,7 @@ class HangoutsDriver extends HttpDriver
 
     /**
      * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $message
+     *
      * @return Answer
      */
     public function getConversationAnswer(IncomingMessage $message)
@@ -124,23 +128,24 @@ class HangoutsDriver extends HttpDriver
 
     /**
      * @param OutgoingMessage|\BotMan\BotMan\Messages\Outgoing\Question $message
-     * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $matchingMessage
-     * @param array $additionalParameters
+     * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage          $matchingMessage
+     * @param array                                                     $additionalParameters
+     *
      * @return array
      */
     public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
     {
         $payload = [
-            'text' => '',
+            'text'  => '',
             'cards' => [
                 [
                     'sections' => [
                         [
-                            'widgets' => []
-                        ]
-                    ]
-                ]
-            ]
+                            'widgets' => [],
+                        ],
+                    ],
+                ],
+            ],
         ];
         if ($message instanceof OutgoingMessage) {
             $text = $message->getText();
@@ -148,11 +153,11 @@ class HangoutsDriver extends HttpDriver
             $payload['text'] = $text;
 
             $attachment = $message->getAttachment();
-            if (! is_null($attachment) && $attachment instanceof Image) {
+            if (!is_null($attachment) && $attachment instanceof Image) {
                 $payload['cards'][0]['sections'][0]['widgets'][] = [
                     'image' => [
-                        'imageUrl' => $attachment->getUrl()
-                    ]
+                        'imageUrl' => $attachment->getUrl(),
+                    ],
                 ];
             }
         } elseif ($message instanceof Question) {
@@ -164,6 +169,7 @@ class HangoutsDriver extends HttpDriver
 
     /**
      * @param mixed $payload
+     *
      * @return Response
      */
     public function sendPayload($payload)
@@ -174,9 +180,10 @@ class HangoutsDriver extends HttpDriver
     /**
      * Low-level method to perform driver specific API requests.
      *
-     * @param string $endpoint
-     * @param array $parameters
+     * @param string                                           $endpoint
+     * @param array                                            $parameters
      * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $matchingMessage
+     *
      * @return void
      */
     public function sendRequest($endpoint, array $parameters, IncomingMessage $matchingMessage)
