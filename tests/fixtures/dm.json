@@ -1,0 +1,39 @@
+{
+  "type": "MESSAGE",
+  "eventTime": "2018-03-07T19:12:36.526271Z",
+  "token": "this-is-a-test-token",
+  "message": {
+    "name": "spaces/3YQwSXAAAAE/messages/-Kzy_s1U9I.-Kzy_s1U9zI",
+    "sender": {
+      "name": "users/1133439002168811",
+      "displayName": "Marcel Pociot",
+      "avatarUrl": "https://lh5.googleusercontent.com/-WYs_gEqotYY/XXA/AAAAAAAFAA/AGi4gfx-hwr4bTbofPGhEK6Q4v5tYSNETQ/mo/photo.jpg",
+      "email": "m.pociot@gmail.com",
+      "type": "HUMAN"
+    },
+    "createTime": "2018-03-07T19:12:36.526271Z",
+    "text": "Hi",
+    "thread": {
+      "name": "spaces/3YQwSXAAAAE/threads/-Kzy_s1U9I",
+      "retentionSettings": {
+        "state": "PERMANENT"
+      }
+    },
+    "space": {
+      "name": "spaces/3YQdhAAAAAE",
+      "type": "DM"
+    }
+  },
+  "user": {
+    "name": "users/1133439002168811",
+    "displayName": "Marcel Pociot",
+    "avatarUrl": "https://lh5.googleusercontent.com/-WYs_gEqotYY/XXA/AAAAAAAFAA/AGi4gfx-hwr4bTbofPGhEK6Q4v5tYSNETQ/mo/photo.jpg",
+    "email": "m.pociot@gmail.com",
+    "type": "HUMAN"
+  },
+  "space": {
+    "name": "spaces/3YQdhAAAAAE",
+    "type": "DM"
+  },
+  "configCompleteRedirectUrl": "https://chat.google.com/api/bot_config_complete"
+}
