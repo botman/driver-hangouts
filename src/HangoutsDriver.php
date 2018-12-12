@@ -160,7 +160,7 @@ class HangoutsDriver extends HttpDriver
                     ],
                 ];
             }
-        }elseif ($message instanceof Question) {
+        } elseif ($message instanceof Question) {
             $payload['text'] = $message->getText();
             $buttons = $message->getButtons();
             if (!is_null($buttons)){
