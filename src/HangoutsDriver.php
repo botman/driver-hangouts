@@ -161,6 +161,22 @@ class HangoutsDriver extends HttpDriver
                 ];
             }
         } elseif ($message instanceof Question) {
+            $buttons = $message->getButtons();
+            if (!is_null($buttons)){
+                foreach($buttons as $button){
+                    if($button instanceof Button) {
+                        $buttonarray[] = [
+                            'textButton' => [
+                                'text' => $button['text'],
+                                'onClick' => [
+                                    $button->getUrl()
+                                ],
+                            ]
+                         ]
+                    ],
+                ];
+                $payload['cards'][0]['sections'][0]['widgets']['buttons'] = $buttonarray
+            }
             $payload['text'] = $message->getText();
         }
 
