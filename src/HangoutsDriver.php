@@ -171,7 +171,7 @@ class HangoutsDriver extends HttpDriver
                                 'onClick' => [
                                     //if it's a link anyway....
                                     'openLink' => [
-                                        'url' => (($button['image_url']) ? 'http://gitlab.city' : 'http://gitlab.city')
+                                        'url' => (($button['image_url']) ? $button['image_url'] : 'http://notabug.io')
                                     ]
                                 ]
                             ]
