@@ -161,25 +161,26 @@ class HangoutsDriver extends HttpDriver
                 ];
             }
         } elseif ($message instanceof Question) {
+            $payload['text'] = $message->getText();
             $buttons = $message->getButtons();
             if (!is_null($buttons)){
                 foreach($buttons as $button){
-                    if($button instanceof Button) {
-                        $buttonarray[] = [
+                        $buttonarray = [
                             'textButton' => [
                                 'text' => $button['text'],
                                 'onClick' => [
-                                    $button->getUrl()
-                                ],
+                                    //if it's a link anyway....
+                                    'openLink' => [
+                                        'url' => (($button['image_url']) ? 'http://gitlab.city' : 'http://gitlab.city')
+                                    ]
+                                ]
                             ]
-                         ]
-                    ],
-                ];
-                $payload['cards'][0]['sections'][0]['widgets']['buttons'] = $buttonarray
+                        ];
+                      $buttonslist['buttons'][] = $buttonarray;
+                }
+                $payload['cards'][0]['sections'][0]['widgets'][] = $buttonslist;
             }
-            $payload['text'] = $message->getText();
         }
-
         return $payload;
     }
 
