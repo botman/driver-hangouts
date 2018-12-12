@@ -160,11 +160,12 @@ class HangoutsDriver extends HttpDriver
                     ],
                 ];
             }
-        } elseif ($message instanceof Question) {
+        }elseif ($message instanceof Question) {
             $payload['text'] = $message->getText();
             $buttons = $message->getButtons();
             if (!is_null($buttons)){
                 foreach($buttons as $button){
+                    if($button['image_url']){
                         $buttonarray = [
                             'textButton' => [
                                 'text' => $button['text'],
@@ -176,11 +177,33 @@ class HangoutsDriver extends HttpDriver
                                 ]
                             ]
                         ];
-                      $buttonslist['buttons'][] = $buttonarray;
+                    }else{
+                        $buttonarray = [
+                            'textButton' => [
+                                'text' => $button['text'],
+                                'onClick' => [
+                                    'action' => [
+                                        'actionMethodName' => $button['text'],
+                                        'parameters' => [
+                                            [
+                                                'key' => 'time',
+                                                'value' => '1 day'
+                                            ],[
+                                                'key' => 'id',
+                                                'value' => '44'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ];
+                    }
+                    $buttonslist['buttons'][] = $buttonarray;
                 }
                 $payload['cards'][0]['sections'][0]['widgets'][] = $buttonslist;
             }
         }
+        
         return $payload;
     }
 
