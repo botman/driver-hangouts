@@ -162,8 +162,48 @@ class HangoutsDriver extends HttpDriver
             }
         } elseif ($message instanceof Question) {
             $payload['text'] = $message->getText();
+            $buttons = $message->getButtons();
+            if (!is_null($buttons)){
+                foreach($buttons as $button){
+                    if($button['image_url']){
+                        $buttonarray = [
+                            'textButton' => [
+                                'text' => $button['text'],
+                                'onClick' => [
+                                    //if it's a link anyway....
+                                    'openLink' => [
+                                        'url' => (($button['image_url']) ? $button['image_url'] : 'http://notabug.io')
+                                    ]
+                                ]
+                            ]
+                        ];
+                    }else{
+                        $buttonarray = [
+                            'textButton' => [
+                                'text' => $button['text'],
+                                'onClick' => [
+                                    'action' => [
+                                        'actionMethodName' => $button['text'],
+                                        'parameters' => [
+                                            [
+                                                'key' => 'time',
+                                                'value' => '1 day'
+                                            ],[
+                                                'key' => 'id',
+                                                'value' => '42'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ];
+                    }
+                    $buttonslist['buttons'][] = $buttonarray;
+                }
+                $payload['cards'][0]['sections'][0]['widgets'][] = $buttonslist;
+            }
         }
-
+        
         return $payload;
     }
 
